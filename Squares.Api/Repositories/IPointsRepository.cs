@@ -4,6 +4,10 @@ namespace Squares.Api.Repositories
 {
     public interface IPointsRepository
     {
+        Task<IEnumerable<MyPoint>> GetPointsAsync();
+        Task<MyPoint> GetPointAsync(Guid id);
+
+
         //* I as a user can import a list of points
         Task<IEnumerable<MyPoint>> AddListOfPointsAsync(List<MyPoint> points);
 
@@ -11,6 +15,6 @@ namespace Squares.Api.Repositories
         Task<MyPoint> AddPointToListAsync(MyPoint point);
 
         //* I as a user can delete a point from an existing list
-        Task DeletePointFromListAsync(MyPoint point);
+        Task DeletePointFromListAsync(Guid id);
     }
 }

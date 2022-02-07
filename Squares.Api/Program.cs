@@ -10,7 +10,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ISquaresRepository, InMemSquaresRepository>();    //  *DI
+builder.Services.AddSingleton<IPointsRepository, InMemPointsRepository>();    //  *DI
 
+
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});//  *For async
 
 
 
