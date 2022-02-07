@@ -1,1 +1,1 @@
-# Squares
+# Squares API
