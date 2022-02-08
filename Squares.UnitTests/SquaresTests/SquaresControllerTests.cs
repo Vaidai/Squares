@@ -50,5 +50,6 @@ namespace Squares.UnitTests.SquaresTests
                 expectedSquares,
                 options => options.ComparingByMembers<SquareDto>());
         }
+
     }
 }

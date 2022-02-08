@@ -19,12 +19,12 @@ namespace Squares.Api.Repositories
             return await Task.FromResult(points);
         }
 
-        public async Task<IEnumerable<MyPoint>> AddListOfPointsAsync(List<MyPoint> points)
+        public async Task ImportAListOfPointsAsync(List<MyPoint> points)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<MyPoint> AddPointToListAsync(MyPoint point)
+        public async Task AddPointToListAsync(MyPoint point)
         {
             throw new NotImplementedException();
         }
