@@ -42,7 +42,7 @@ namespace Squares.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePointAsync(Guid id)
         {
-            var existingItem = _repository.GetPointAsync(id);
+            var existingItem = await _repository.GetPointAsync(id);
             if (existingItem is null)
             {
                 return NotFound();
