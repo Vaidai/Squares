@@ -21,12 +21,17 @@ namespace Squares.Api.Repositories
 
         public async Task ImportAListOfPointsAsync(List<MyPoint> points)
         {
-            throw new NotImplementedException();
+            foreach (var point in points)
+            {
+                await AddPointToListAsync(point);
+            }
+            await Task.CompletedTask;
         }
 
         public async Task AddPointToListAsync(MyPoint point)
         {
-            throw new NotImplementedException();
+            points.Add(point);
+            await Task.CompletedTask;
         }
 
         public async Task DeletePointFromListAsync(Guid id)
