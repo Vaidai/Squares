@@ -1,6 +1,6 @@
-﻿namespace Squares.Api.Entities
+﻿namespace Squares.Api.Dtos
 {
-    public class MyPoint
+    public class PointDTO
     {
         public Guid Id { get; set; }
         public int X { get; set; }
