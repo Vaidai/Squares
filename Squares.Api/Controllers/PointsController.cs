@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Squares.Api.Dtos;
 using Squares.Api.Entities;
 using Squares.Api.Repositories;
@@ -10,32 +11,38 @@ namespace Squares.Api.Controllers
     public class PointsController : ControllerBase
     {
         private readonly IPointsRepository _repository;
+        private IMapper _mapper;
 
-        public PointsController(IPointsRepository repository)
+
+        public PointsController(IPointsRepository repository, IMapper mapper)
         {
-            this._repository = repository;
+            _repository = repository;
+            _mapper = mapper;
         }
 
 
         //  GET /points
         [HttpGet]
-        public async Task<IEnumerable<PointDto>> GetPointsAsync()
+        public async Task<IEnumerable<PointDTO>> GetPointsAsync()
         {
-            var points = (await _repository.GetPointsAsync())
-                .Select(point => point.PointAsDto());
-            return points;
+            var points = await _repository.GetPointsAsync();
+            //var result = _mapper.Map<List<Point>, List<PointDTO>>((List<Point>)points); //todo delete
+            //IEnumerable<PointDTO> ienumerableDest = _mapper.Map<List<Point>, IEnumerable<PointDTO>>((List<Point>)points);//todo delete
+            var result= _mapper.Map<List<Point>, IEnumerable<PointDTO>>((List<Point>)points);
+            return result;
         }
 
         //  GET /points/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<PointDto>> GetPointAsync(Guid id)
+        public async Task<ActionResult<PointDTO>> GetPointAsync(Guid id)
         {
             var point = await _repository.GetPointAsync(id);
             if (point is null)
             {
                 return NotFound();
             }
-            return point.PointAsDto();
+            var result = _mapper.Map<Point, PointDTO>(point);
+            return result;
         }
 
         //  DELETE /points/{id}
@@ -53,34 +60,34 @@ namespace Squares.Api.Controllers
 
         //  POST /points
         [HttpPost]
-        public async Task<ActionResult<PointDto>> AddPointAsync(AddPointDto pointDto)
+        public async Task<ActionResult<PointDTO>> AddPointAsync(AddPointDTO newPoint)
         {
-            MyPoint point = new()
+            Point pointToAdd = new()
             {
                 Id = Guid.NewGuid(),
-                X = pointDto.X,
-                Y = pointDto.Y
+                X = newPoint.X,
+                Y = newPoint.Y
             };
 
-            await _repository.AddPointToListAsync(point);
-            return CreatedAtAction(nameof(GetPointAsync), new { id = point.Id }, point.PointAsDto());
+            await _repository.AddPointToListAsync(pointToAdd);
+            var result =  CreatedAtAction(nameof(GetPointAsync), new { id = pointToAdd.Id }, _mapper.Map<Point, AddPointDTO>(pointToAdd));
+            return result;
         }
 
         //  POST /points/list
         [HttpPost]
         [Route("list")]
-        public async Task<ActionResult<PointDto>> InsertAListOfPointsAsync(List<PointDto> pointsDto)
+        public async Task<ActionResult<PointDTO>> InsertAListOfPointsAsync(List<PointDTO> pointsDto)
         {
             foreach (var p in pointsDto)
             {
-                MyPoint point = new()
+                Point point = new()
                 {
                     Id = Guid.NewGuid(),
                     X = p.X,
                     Y = p.Y
                 };
                 await _repository.AddPointToListAsync(point);
-
             }
             return Ok();
         }

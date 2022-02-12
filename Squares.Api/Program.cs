@@ -8,6 +8,7 @@ using Squares.Api.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());//** Mapper
 
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));//   *
 

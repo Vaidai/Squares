@@ -4,22 +4,22 @@ namespace Squares.Api.Repositories
 {
     public class InMemPointsRepository : IPointsRepository
     {
-        private readonly List<MyPoint> points = new()
+        private readonly List<Point> points = new()
         {
-            new MyPoint { Id = Guid.NewGuid(), X = 1, Y = 1 },
-            new MyPoint { Id = Guid.NewGuid(), X = 1, Y = 1 },
-            new MyPoint { Id = Guid.NewGuid(), X = 1, Y = 1 },
-            new MyPoint { Id = Guid.NewGuid(), X = 1, Y = 1 },
-            new MyPoint { Id = Guid.NewGuid(), X = 1, Y = 1 },
-            new MyPoint { Id = Guid.NewGuid(), X = 1, Y = 1 }
+            new Point { Id = Guid.NewGuid(), X = 1, Y = 1 },
+            new Point { Id = Guid.NewGuid(), X = 1, Y = 1 },
+            new Point { Id = Guid.NewGuid(), X = 1, Y = 1 },
+            new Point { Id = Guid.NewGuid(), X = 1, Y = 1 },
+            new Point { Id = Guid.NewGuid(), X = 1, Y = 1 },
+            new Point { Id = Guid.NewGuid(), X = 1, Y = 1 }
         };
 
-        public async Task<IEnumerable<MyPoint>> GetPointsAsync()
+        public async Task<IEnumerable<Point>> GetPointsAsync()
         {
             return await Task.FromResult(points);
         }
 
-        public async Task ImportAListOfPointsAsync(List<MyPoint> points)
+        public async Task ImportAListOfPointsAsync(List<Point> points)
         {
             foreach (var point in points)
             {
@@ -28,7 +28,7 @@ namespace Squares.Api.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task AddPointToListAsync(MyPoint point)
+        public async Task AddPointToListAsync(Point point)
         {
             points.Add(point);
             await Task.CompletedTask;
@@ -41,7 +41,7 @@ namespace Squares.Api.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task<MyPoint> GetPointAsync(Guid id)
+        public async Task<Point> GetPointAsync(Guid id)
         {
             var point = points.Where(point => point.Id == id).SingleOrDefault();
             return await Task.FromResult(point);

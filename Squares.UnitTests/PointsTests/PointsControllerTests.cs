@@ -20,7 +20,7 @@ namespace Squares.UnitTests.PointsTests
         public async Task DeletePointAsync_WithExistingPoint_ReturnNoContent()
         {
             // Arange
-            MyPoint existingPoint = new() { Id = Guid.NewGuid(), X = 1, Y = 2 };
+            Point existingPoint = new() { Id = Guid.NewGuid(), X = 1, Y = 2 };
 
             _repositoryStub.Setup(repo => repo.GetPointAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(existingPoint);
@@ -38,7 +38,7 @@ namespace Squares.UnitTests.PointsTests
         public async Task DeletePointAsync_WithUnexistingPoint_ReturnNotFound()
         {
             // Arange
-            MyPoint unexistingPoint = new() { Id = Guid.NewGuid(), X = 1, Y = 2 };
+            Point unexistingPoint = new() { Id = Guid.NewGuid(), X = 1, Y = 2 };
 
             _repositoryStub.Setup(repo => repo.GetPointAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(unexistingPoint);
@@ -73,7 +73,7 @@ namespace Squares.UnitTests.PointsTests
         public async Task GetPointsAsync_WithEmptyList_ReturnEmptyList()
         {
             // Arrange
-            MyPoint[] expected = new MyPoint[] { };
+            Point[] expected = new Point[] { };
 
             _repositoryStub.Setup(repo => repo.GetPointsAsync()).ReturnsAsync(expected);
 
@@ -91,8 +91,8 @@ namespace Squares.UnitTests.PointsTests
         {
             // Arrange
             var expected = new[] {
-                new MyPoint() { Id = Guid.NewGuid(), X = 1, Y = 2 },
-                new MyPoint() { Id = Guid.NewGuid(), X = 13, Y = 32 } };
+                new Point() { Id = Guid.NewGuid(), X = 1, Y = 2 },
+                new Point() { Id = Guid.NewGuid(), X = 13, Y = 32 } };
 
             _repositoryStub.Setup(repo => repo.GetPointsAsync()).ReturnsAsync(expected);
 
@@ -109,7 +109,7 @@ namespace Squares.UnitTests.PointsTests
         public async Task GetPointAsync_WithExistingPoint_ReturnExpectedPoint()
         {
             // Arrange
-            var expected = new MyPoint() { Id = Guid.NewGuid(), X = 1, Y = 2 };
+            var expected = new Point() { Id = Guid.NewGuid(), X = 1, Y = 2 };
             _repositoryStub.Setup(repo => repo.GetPointAsync(Guid.NewGuid())).ReturnsAsync(expected);
 
             var controller = new PointsController(_repositoryStub.Object);
@@ -125,7 +125,7 @@ namespace Squares.UnitTests.PointsTests
         public async Task GetPointAsync_WithUnExistingPoint_ReturnNotFound()
         {
             // Arrange
-            var point = new MyPoint() { Id = Guid.NewGuid(), X = 1, Y = 2 };
+            var point = new Point() { Id = Guid.NewGuid(), X = 1, Y = 2 };
             _repositoryStub.Setup(repo => repo.GetPointAsync(Guid.NewGuid())).ReturnsAsync(point);
 
             var controller = new PointsController(_repositoryStub.Object);
